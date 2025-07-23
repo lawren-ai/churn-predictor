@@ -1,0 +1,22 @@
+from pydantic import BaseModel, Field
+
+class CustomerData(BaseModel):
+    gender: str = Field(..., example="Male")
+    SeniorCitizen: int = Field(..., example=0)
+    Partner: str = Field(..., example="Yes")
+    Dependents: str = Field(..., example="No")
+    tenure: int = Field(..., example=5)
+    PhoneService: str = Field(..., example="Yes")
+    MultipleLines: str = Field(..., example="No")
+    InternetService: str = Field(..., example="DSL")
+    OnlineSecurity: str = Field(..., example="Yes")
+    OnlineBackup: str = Field(..., example="No")
+    DeviceProtection: str = Field(..., example="Yes")
+    TechSupport: str = Field(..., example="No")
+    StreamingTV: str = Field(..., example="No")
+    StreamingMovies: str = Field(..., example="No")
+    Contract: str = Field(..., example="Month-to-month")
+    PaperlessBilling: str = Field(..., example="Yes")
+    PaymentMethod: str = Field(..., example="Electronic check")
+    MonthlyCharges: float = Field(..., example=70.35)
+    TotalCharges: float = Field(..., example=1397.5)
