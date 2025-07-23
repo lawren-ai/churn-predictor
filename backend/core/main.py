@@ -1,38 +1,45 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
 
+# Path to the predictions CSV file
+PREDICTIONS_CSV = os.path.abspath(os.path.join("..", "backend", "history", "predictions.csv"))
 
-from fastapi import FastAPI
-from churn.views import router as churn_router
+st.set_page_config(page_title="Admin Dashboard", layout="wide")
+st.title("📊 Admin Dashboard - Customer Churn Insights")
 
-app = FastAPI(
-    title="Churn Prediction API",
-    version="1.0.0",
-)
+# Load the data
+@st.cache_data
+def load_predictions():
+    try:
+        df = pd.read_csv(PREDICTIONS_CSV)
+        return df
+    except Exception as e:
+        st.warning(f"Error loading predictions: {e}")
+        return pd.DataFrame()
 
-# Register routes
-app.include_router(churn_router, prefix="/api")
+df = load_predictions()
 
+if df.empty:
+    st.info("No predictions logged yet.")
+else:
+    # Filters
+    with st.sidebar:
+        st.header("🔍 Filter Options")
+        gender_filter = st.multiselect("Gender", options=df["gender"].unique(), default=df["gender"].unique())
+        churn_filter = st.multiselect("Churn", options=[True, False], default=[True, False])
+        df = df[df["gender"].isin(gender_filter) & df["churn"].isin(churn_filter)]
 
-from fastapi import FastAPI
-from churn.schemas import CustomerData
-from model_pipeline.predict import make_prediction
+    # Download
+    csv = df.to_csv(index=False).encode("utf-8")
+    st.download_button("📥 Download CSV", csv, "filtered_predictions.csv", "text/csv")
 
-app = FastAPI()
+    # Charts
+    st.subheader("📈 Churn Distribution")
+    churn_counts = df["churn"].value_counts()
+    st.bar_chart(churn_counts)
 
-@app.post("/api/predict")
-def predict(data: CustomerData):
-    input_dict = data.dict()
-    result = make_prediction(input_dict)
-    return result
-
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    # Table
+    st.subheader("🗂️ Filtered Predictions")
+    st.dataframe(df, use_container_width=True)
