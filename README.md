@@ -21,7 +21,7 @@ The goal is to assist businesses in identifying customers likely to leave their 
 
 ## 🧠 Machine Learning
 
-- **Model**: Logistic Regression (or your chosen classifier).
+- **Model**: RandomForest Classifier.
 - **Input Features**: 19 customer attributes including:
   - Demographics (e.g., gender, senior citizen)
   - Services used (e.g., InternetService, StreamingTV)
@@ -56,8 +56,8 @@ The goal is to assist businesses in identifying customers likely to leave their 
 
 1. **Clone the repository**  
    ```bash
-   git clone https://github.com/your-username/churn-prediction-app.git
-   cd churn-prediction-app
+   git clone https://github.com/lawren-ai/churn-predictor.git
+   cd churn-predictor
    ```
 
 2. **Create a virtual environment**  
@@ -87,8 +87,8 @@ The goal is to assist businesses in identifying customers likely to leave their 
 
 The app is deployed using **Render**. You can access it at:
 
-👉 **Frontend**: [your-streamlit-url]  
-👉 **API**: [your-api-url]
+👉 **Frontend**: [http://localhost:8501/]  
+👉 **API**: [https://churn-predictor-15.onrender.com]
 
 Make sure to update the frontend to send requests to the correct `POST /predict` endpoint.
 
