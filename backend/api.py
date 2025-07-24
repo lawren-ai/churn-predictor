@@ -14,11 +14,13 @@ app.include_router(churn_router, prefix="/api")
 # Load the model and label encoder
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent  # /src
+BASE_DIR = Path(__file__).resolve().parents[2]  # /src
 
 model_path = BASE_DIR / "backend" / "churn" / "churn_model.pkl"
 encoder_path = BASE_DIR / "backend" / "churn" / "label_encoders.pkl"
 
+print(f"[DEBUG] BASE_DIR: {BASE_DIR}")
+print(f"[DEBUG] MODEL_PATH: {model_path}")
 
 model = joblib.load(model_path)
 label_encoder = joblib.load(encoder_path)
