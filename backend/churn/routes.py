@@ -1,7 +1,7 @@
 # backend/churn/routes.py
 
 from fastapi import APIRouter
-from backend.churn.schemas import CustomerInput, ChurnPrediction
+from backend.churn.schemas import CustomerData, ChurnPrediction
 from backend.churn.service import predict_churn
 
 router = APIRouter()

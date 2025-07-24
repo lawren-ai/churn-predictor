@@ -20,3 +20,8 @@ class CustomerData(BaseModel):
     PaymentMethod: str = Field(..., example="Electronic check")
     MonthlyCharges: float = Field(..., example=70.35)
     TotalCharges: float = Field(..., example=1397.5)
+
+
+class ChurnPrediction(BaseModel):
+    churn: bool
+    probability: float
