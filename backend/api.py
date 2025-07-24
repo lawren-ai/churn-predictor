@@ -5,15 +5,19 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 import os
+from pathlib import Path
 from backend.churn.routes import router as churn_router
 
 app = FastAPI()
 app.include_router(churn_router, prefix="/api")
 
 # Load the model and label encoder
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-model_path = os.path.join(BASE_DIR, "churn", "churn_model.pkl")
-encoder_path = os.path.join(BASE_DIR, "churn", "label_encoders.pkl")
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # adjust to project root
+model_path = BASE_DIR / "backend" / "churn" / "churn_model.pkl"
+encoder_path = BASE_DIR / "backend" / "churn" / "label_encoders.pkl"
+
 
 model = joblib.load(model_path)
 label_encoder = joblib.load(encoder_path)
