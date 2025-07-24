@@ -5,3 +5,11 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn backend.core.main:app --host 0.0.0.0 --port 10000
     plan: free
+
+
+  - type: web
+    name: churn-streamlit-frontend
+    env: python
+    buildCommand: pip install -r frontend/requirements.txt
+    startCommand: streamlit run frontend/app.py --server.port 80
+    plan: free
