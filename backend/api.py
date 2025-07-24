@@ -5,7 +5,7 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 import os
-from churn.routes import router as churn_router
+from backend.churn.routes import router as churn_router
 
 app = FastAPI()
 app.include_router(churn_router, prefix="/api")
