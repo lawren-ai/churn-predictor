@@ -11,6 +11,6 @@ def welcome():
     return {"message": "Welcome to the Churn Prediction API!"}
 
 @router.post("/predict", response_model=ChurnPrediction)
-def predict(input_data: CustomerInput):
+def predict(input_data: CustomerData):
     result = predict_churn(input_data.dict())
     return result
