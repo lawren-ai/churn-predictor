@@ -58,15 +58,20 @@ class ChurnPrediction(BaseModel):
 def home():
     return {"message": "Churn Prediction API is live!"}
 
+
 @app.post("/predict", response_model=ChurnPrediction)
 def predict(data: CustomerInput):
     input_df = pd.DataFrame([data.dict()])
 
-    # Label encoding for 'gender' column only (as an example)
-    input_df['gender'] = label_encoder.transform(input_df['gender'])
+    # Apply all relevant encoders
+    for col in input_df.columns:
+        if col in label_encoder:
+            input_df[col] = label_encoder[col].transform(input_df[col])
 
     # Predict
     churn_prob = model.predict_proba(input_df)[0][1]
     churn = churn_prob > 0.5
 
     return {"churn": churn, "probability": round(churn_prob, 2)}
+
+

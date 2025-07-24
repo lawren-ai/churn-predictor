@@ -61,7 +61,7 @@ if submitted:
         }
 
         try:
-            response = requests.post("http://127.0.0.1:8000/api/predict", json=input_data)
+            response = requests.post("https://churn-predictor-14.onrender.com/predict", json=input_data)
             response.raise_for_status()
             result = response.json()
 
