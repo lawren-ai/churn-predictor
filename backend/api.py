@@ -14,7 +14,8 @@ app.include_router(churn_router, prefix="/api")
 # Load the model and label encoder
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent  # adjust to project root
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # /src
+
 model_path = BASE_DIR / "backend" / "churn" / "churn_model.pkl"
 encoder_path = BASE_DIR / "backend" / "churn" / "label_encoders.pkl"
 
