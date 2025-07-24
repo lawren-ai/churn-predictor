@@ -1,170 +1,122 @@
-# 🔍 Customer Churn Prediction Web App
+# 📊 Customer Churn Prediction App
 
-## 🌐 Overview
+## Overview
 
-This project is a full-stack machine learning web application for **predicting customer churn** using a trained classification model. It consists of:
+This project is a full-stack machine learning application designed to predict customer churn for a telecom company. It combines a FastAPI backend for model inference with a Streamlit frontend for user interaction. The entire application is deployed on Render.
 
-* A **FastAPI backend** serving ML predictions
-* A **Streamlit frontend** for user interaction
-* A simple **admin dashboard** with logs, filters, charts, and CSV export
-* Built-in logging of predictions with timestamps
-
-It was designed to help business teams easily assess churn risk and make proactive customer retention decisions.
+The goal is to assist businesses in identifying customers likely to leave their service so that proactive retention strategies can be implemented.
 
 ---
 
-## 🧬 Use Case
+## 🚀 Features
 
-The application solves a typical telecom business problem: identifying customers likely to churn (i.e., discontinue service) based on usage behavior and profile attributes. Early detection allows timely engagement strategies.
+- **Churn Prediction** using a trained ML model.
+- **User-Friendly Interface** via Streamlit.
+- **Real-time Predictions** with a deployed FastAPI API.
+- **Admin Dashboard** to monitor prediction logs.
+- **Data Persistence** using CSV logging.
+- **Render Deployment** for public accessibility.
 
 ---
 
-## 📆 Project Structure
+## 🧠 Machine Learning
+
+- **Model**: Logistic Regression (or your chosen classifier).
+- **Input Features**: 19 customer attributes including:
+  - Demographics (e.g., gender, senior citizen)
+  - Services used (e.g., InternetService, StreamingTV)
+  - Billing information (e.g., MonthlyCharges, PaymentMethod)
+- **Encoding**: Categorical columns are label-encoded using a saved encoder.
+
+---
+
+## 📁 Project Structure
 
 ```
-churn-prediction-app/
-├── backend/
-│   ├── core/
-│   │   ├── main.py             # FastAPI app entrypoint
-│   │   └── logger.py           # Logging utility
-│   ├── churn/
-│   │   └── views.py            # API routes for churn prediction
-│   └── history/
-│       └── predictions.csv     # Prediction logs with timestamps
-├── frontend/
-│   └── app.py                  # Streamlit UI code
-├── model_pipeline/
-│   ├── predict.py              # Model loading and prediction logic
-│   ├── models/
-│   │   └── churn_model.pkl     # Trained ML model (not tracked in Git)
-│   └── outputs/
-│       └── label_encoders.pkl  # Encoders for categorical features
-├── .gitignore
+.
+├── backend
+│   ├── churn
+│   │   ├── churn_model.pkl
+│   │   ├── label_encoders.pkl
+│   │   ├── routes.py
+│   │   └── schemas.py
+│   └── core
+│       └── main.py
+│   └── api.py
+├── frontend
+│   └── app.py
+├── predictions.csv
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## 🚀 Features
+## 📦 Installation
 
-### 1. 📊 Prediction API (FastAPI)
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/your-username/churn-prediction-app.git
+   cd churn-prediction-app
+   ```
 
-* Exposes a POST endpoint at `/api/predict`
-* Receives customer data as JSON
-* Returns:
+2. **Create a virtual environment**  
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-  ```json
-  {
-    "churn": true,
-    "probability": 0.82
-  }
-  ```
-* Logs predictions to `backend/history/predictions.csv` with a timestamp
+3. **Install dependencies**  
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 2. 📈 Frontend Interface (Streamlit)
+4. **Run the backend API**  
+   ```bash
+   uvicorn backend.api:app --reload
+   ```
 
-* Clean, interactive form for entering customer details
-* Instant predictions displayed on submit
-* Simple and fast, great for demo or internal use
-
-### 3. 🔧 Admin Dashboard
-
-* Filter predictions by churn status and date
-* View as interactive dataframe
-* Download logs as CSV
-* Visualizations with bar charts and pie charts of predictions
-
----
-
-## 🤖 Model Details
-
-* Trained on a publicly available customer churn dataset
-* Input features include demographics, service usage, and billing preferences
-* Model: Logistic Regression / Random Forest (configurable)
-* Encoders saved and reused for consistent inference
+5. **Run the frontend (in another terminal)**  
+   ```bash
+   streamlit run frontend/app.py
+   ```
 
 ---
 
-## 🎨 Technologies Used
+## 🌐 Deployment
 
-| Component  | Stack                                |
-| ---------- | ------------------------------------ |
-| Frontend   | Streamlit                            |
-| Backend    | FastAPI                              |
-| ML Model   | scikit-learn + joblib                |
-| Logging    | Python CSV + UTC timestamps          |
-| Deployment | Render / Fly.io / Railway (optional) |
+The app is deployed using **Render**. You can access it at:
 
----
+👉 **Frontend**: [your-streamlit-url]  
+👉 **API**: [your-api-url]
 
-## 🚧 Setup Instructions
-
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/yourusername/churn-prediction-app.git
-cd churn-prediction-app
-```
-
-### 2. Create a virtual environment
-
-```bash
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-```
-
-### 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Run the backend (FastAPI)
-
-```bash
-uvicorn backend.core.main:app --reload
-```
-
-### 5. Run the frontend (Streamlit)
-
-```bash
-streamlit run frontend/app.py
-```
-
-### 6. Test the API (optional)
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/predict \
-     -H "Content-Type: application/json" \
-     -d '{"gender": "Male", "SeniorCitizen": 0, ...}'
-```
+Make sure to update the frontend to send requests to the correct `POST /predict` endpoint.
 
 ---
 
-## 🔄 Future Improvements
+## 📊 Admin Features
 
-* Replace CSV logging with SQLite/PostgreSQL
-* Add JWT/API key authentication
-* Dockerize app for portability
-* Integrate CI/CD for automated deployment
-* Add model monitoring and retraining pipeline
+- View all past predictions
+- Filter by churn probability
+- Export logs as CSV
+
+---
+
+## 🔍 Future Work
+
+- Add user authentication for admin dashboard.
+- Implement live model retraining using feedback.
+- Integrate with cloud storage (e.g., S3) for scalable logging.
+- Improve model performance with advanced algorithms (XGBoost, Neural Nets).
+
+---
+
+## 🧑‍💻 Author
+
+- **Lawrence Akinboade** — aspiring AI engineer | [LinkedIn](#) | [GitHub](#)
 
 ---
 
 ## 📄 License
 
-[MIT License](LICENSE)
-
----
-
-## 👤 Author
-
-**Lawrence Akinboade**
-Built as part of a learning path to master end-to-end AI application development.
-
----
-
-## 📅 Project Status
-
-**Completed MVP** – Frontend, backend, model, logging, admin dashboard all working. Ready for feedback, extension, or deployment.
+This project is licensed under the MIT License.
