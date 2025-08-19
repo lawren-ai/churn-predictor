@@ -113,7 +113,7 @@ Make sure to update the frontend to send requests to the correct `POST /predict`
 
 ## 🧑‍💻 Author
 
-- **Lawrence Akinboade** — aspiring AI engineer | [LinkedIn](#) | [GitHub](#)
+- **Lawrence Akinboade** — aspiring AI engineer | [LinkedIn](https://ng.linkedin.com/in/ayotunde-akinboade) | [GitHub](https://github.com/lawren-ai)
 
 ---
 
